@@ -1,16 +1,12 @@
 require("dotenv").config();
 const mongoose = require("mongoose")
-mongoose.connect(process.env.DB_HOST,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
-// mongoose.connect("mongodb+srv://arshadayanikkal:ueqOXrejWD1UFcnC@cluster0.f8vnkyx.mongodb.net/UserMG")
+mongoose.connect(process.env.DB_HOST ); mongoose.connect("mongodb+srv://arshadayanikkal:ueqOXrejWD1UFcnC@cluster0.f8vnkyx.mongodb.net/UserMG").then(()=>{
+    console.log("Database connected..");
+})
 
 const path = require('path')
 const express = require('express')
 const app = express()
-
-// app.use(express.static(path.join(__dirname, "public")));
 
 const userRouter = require('./routes/userRouter')
 const adminRouter = require('./routes/adminRouter')

@@ -20,14 +20,13 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    verified: {
-        type: Number,
-        required: true
+    token:{
+        type : String
     },
-    accountOpenAt:{
-        type:String,
-        require:true
-    },
+    // accountOpenAt:{
+    //     type:String,
+    //     require:true
+    // },
     block:{
       type:Number
     },
@@ -37,8 +36,8 @@ const userSchema = mongoose.Schema({
 });
 
 
-const User = mongoose.model('User', userSchema);
+const user = mongoose.model('user', userSchema);
 
 module.exports = {
-    User
+    user
 };
