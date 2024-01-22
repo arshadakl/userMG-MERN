@@ -37,7 +37,7 @@ const doSignup = async (req, res) => {
 
   user.password = undefined;
   user.block = undefined;
-  res.status(201).json({ user });
+  res.status(201).json({ success:true,user });
 };
 
 // login function
@@ -76,6 +76,19 @@ const doLogin = async (req, res) => {
   }
 };
 
+
+
+//logOut
+// #########################
+const doLogout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).json({ success: true, message: "Logout successful" });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 // profile load
 // ########################
 const profilePage = async (req, res) => {
@@ -89,20 +102,42 @@ const profilePage = async (req, res) => {
   }
 };
 
-//logOut
-// #########################
-const doLogout = async (req, res) => {
+
+// update user data 
+// #######################
+const updateUser = async (req, res) => {
   try {
-    res.clearCookie("token");
-    res.status(200).json({ success: true, message: "Logout successful" });
+    const {id, userName, fullName, mobile} = req.body
+    const userData = await UserDB.updateOne({_id:id},{$set:{userName,fullName,mobile}})
+    const user = await UserDB.findById(id)
+    user.password = undefined
+    res.json({user})
+
   } catch (error) {
     console.log(error.message);
   }
-};
+}
+
+
+//update user image
+// ######################
+const updateUserImage = async (req, res) => {
+  try {
+    const {id} = req.body
+    await UserDB.updateOne({_id:id},{$set:{image:req.file.filename}})
+    const user = await UserDB.findOne({_id:id})
+    console.log(user);
+    res.json({user})
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 module.exports = {
   doSignup,
   doLogin,
   profilePage,
   doLogout,
+  updateUser,
+  updateUserImage
 };

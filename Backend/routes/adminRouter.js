@@ -12,5 +12,6 @@ router.use(bodyParser.urlencoded({extended:true}))
 const adminController = require('../controllers/adminController')
 
 router.post('/login',adminController.doLogin)
+router.get('/allUsers',adminController.getAllUsers)
 
 module.exports = router

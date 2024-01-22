@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import './Signup.css'
-import { UserSignup } from '../../api/userApi'
+import { UserSignup } from '../../../api/userApi'
 import { useNavigate } from 'react-router-dom'
 // UserSign
 // userSignup
@@ -108,7 +108,6 @@ function Signup() {
                      className="input100"
                      placeholder="Email"
                      type="email"
-                     name="email"
                      />
                </div>
                <div className="wrap-input100 mx-1">

@@ -21,3 +21,31 @@ export const UserLogin = async(loginData)=>{
         console.log(error);
     }
 }
+
+
+export const UpdateUser = async(updateData)=>{
+    try {
+        const response = await userAPI.patch('/updateuser',updateData)
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const UpdateImage = async (img,id) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', img);
+      formData.append('id', id);
+  
+      const response = await userAPI.post('/updateimg', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
