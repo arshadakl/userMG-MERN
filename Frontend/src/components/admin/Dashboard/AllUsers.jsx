@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { DeleteUser, GetAllUsers } from '../../../api/adminApi'
+import { useNavigate } from 'react-router-dom'
 
 
 function AllUsers() {
+    const navigate = useNavigate()
     const closeBTN = useRef(null)
     const [deleteUser,setDeleteUser] = useState('')
     const [users, setUsers] = useState([])
@@ -90,7 +92,7 @@ function AllUsers() {
                                                         <button type="button" onClick={()=>setDeleteUser(item)} className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                             Delete User
                                                         </button>
-                                                        <a type="button" className="btn btn-outline-dark mx-2">
+                                                        <a type="button" onClick={()=>navigate(`/admin/edituser/${item._id}`)} className="btn btn-outline-dark mx-2">
                                                             Edit
                                                         </a>
                                                     </td>

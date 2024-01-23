@@ -16,7 +16,7 @@ function AdminNav() {
         <header className="font-monospace">
             <nav className="navbar bg-dark text-white py-4">
                 <div className="container-fluid">
-                    <a className="navbar-brand px-5 text-white fs-4">Admin Dashboard</a>
+                    <a style={{cursor:'pointer'}} onClick={()=>navigate('/admin')} className="navbar-brand px-5 text-white fs-4">Admin Dashboard</a>
 
                     <div className="dropdown">
                         <button className="btn btn-outline-light dropdown-toggle mx-5" data-bs-toggle="dropdown" aria-expanded="false">

@@ -62,9 +62,37 @@ const deleteUser = async(req,res)=>{
 }
 
 
+//get one user Data 
+// ########################
+const getOneUser = async(req,res)=>{
+  try {
+    console.log(req.params.userid);
+      const user = await UserDB.findById(req.params.userid);
+      console.log(user);
+      res.json({user})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const updateUser = async(req,res)=>{
+  try {
+    console.log(req.body);
+
+    const {id, userName, fullName, mobile} = req.body.data
+    await UserDB.updateOne({_id:id},{$set:{userName,fullName,mobile}})
+    res.json({success:true})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 
 module.exports = {
   doLogin,
   getAllUsers,
-  deleteUser
+  deleteUser,
+  getOneUser,
+  updateUser
 };

@@ -31,3 +31,23 @@ export const DeleteUser = async (id) => {
         console.log(error);
     }
 }
+
+
+export const GetOneUser = async (id) => {
+    try {
+        const response = await adminAPI.get(`/edituser/${id}`)
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const UpdateUser = async (data) => {
+    try {
+        // console.log(data);
+        const response = await adminAPI.patch('/edituser', {data})
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}

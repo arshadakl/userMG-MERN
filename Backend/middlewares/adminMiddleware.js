@@ -6,7 +6,6 @@ const isLogin = async (req, res, next) => {
   if (!token) {
     return res.status(404).json({ message: "First login" });
   }
-
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     // console.log(decode);
