@@ -16,5 +16,6 @@ router.get('/allUsers',adminController.getAllUsers)
 router.delete('/deleteuser/:id', auth.isLogin, adminController.deleteUser);
 router.get('/edituser/:userid',auth.isLogin, adminController.getOneUser)
 router.patch('/edituser',auth.isLogin, adminController.updateUser)
-
+router.post('/adduser', adminController.createUser)
+router.get('/search',adminController.searchUser)
 module.exports = router

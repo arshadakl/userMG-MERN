@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { DeleteUser, GetAllUsers } from '../../../api/adminApi'
+import { DeleteUser, GetAllUsers, UsersSearch } from '../../../api/adminApi'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -8,6 +8,7 @@ function AllUsers() {
     const closeBTN = useRef(null)
     const [deleteUser,setDeleteUser] = useState('')
     const [users, setUsers] = useState([])
+    const [searchKey,setSearchKey] = useState('')
 
     useEffect(() => {
         try {
@@ -37,6 +38,12 @@ function AllUsers() {
         }
     }
 
+    const handleSearchUsers = async (e) =>{
+        setSearchKey(e.target.value)
+        const response = await UsersSearch(searchKey)
+        setUsers(response.users)
+    }
+
     return (
         <>
 
@@ -46,9 +53,9 @@ function AllUsers() {
                         <div className="card-body h-100 ">
                             <div className="dash-header  ">
                                 <div className="card ">
-                                    <div className="card-body dash-box">
+                                    <div className="card-body dash-box d-flex justify-content-between">
                                         <h1 className="fs-4  ">Users Details</h1>
-                                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" className="shadow btn btn-dark  ">
+                                        <button  className="shadow btn btn-dark" onClick={()=>navigate('/admin/adduser')}>
                                             + Add user
                                         </button>
                                     </div>
@@ -57,7 +64,7 @@ function AllUsers() {
                                 <div className="card ">
                                     <div className="card-body dash-box d-flex justify-content-start">
                                         <form className="d-flex col-12 " role="search" action="/admin/dashboard/search" method="get">
-                                            <input className="form-control me-2" name="key" type="search" placeholder="Search" aria-label="Search" />
+                                            <input value={searchKey} onChange={(e)=>handleSearchUsers(e)} className="form-control me-2" name="key" type="search" placeholder="Search" aria-label="Search" />
                                             <button className="btn btn-outline-dark col-2" type="submit"><i className="bi bi-search" /> Search</button>
                                         </form>
                                     </div>

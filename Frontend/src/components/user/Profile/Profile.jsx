@@ -6,12 +6,12 @@ import { setUserDetails } from '../../../redux/userSlice';
 
 function Profile() {
     const dispatch = useDispatch()
-    const baseImg = "defaultDp.jpg"
     const fileInputRef = useRef(null)
     const [isEdit, setIsEdit] = useState(false)
     const [isImgUpdate, setIsImgUpdate] = useState(false)
     const { id, userName, fullName, email, image, mobile ,token} = useSelector((state) => state.user)
-    const [selectedFile, setSelectedFile] = useState(image ? image : baseImg);
+    const baseImg = image ? image :`http://localhost:8080/users/defaultDp.jpg` 
+    const [selectedFile, setSelectedFile] = useState(baseImg);
     const [profileImg, setProfileImg] = useState('')
     const handleButtonClick = () => {
         fileInputRef.current.click();
@@ -49,9 +49,20 @@ function Profile() {
 
     const imageUpload = async() => {
         const response = await UpdateImage(profileImg,id,token)
+        dispatch(setUserDetails({
+            id: response.user._id,
+            userName: response.user.userName,
+            fullName: response.user.fullName,
+            mobile: response.user.mobile,
+            email: response.user.email,
+            image: response.user.image,
+            token: token
+        }))
         setIsImgUpdate(true)
-        // setSelectedFile(response.user.image)
+        setSelectedFile(response.user.image)
         console.log(response);
+        setIsEdit(false)
+
     }
     return (
         <div className="contaier font-monospace">
@@ -69,9 +80,12 @@ function Profile() {
                                 style={{ display: 'none' }}
                                 onChange={(e)=>handleFileChange(e)}
                             />
-                            {isEdit ? (selectedFile != image ?
+                            {isEdit ? (selectedFile !== image ?
                                 <button data-aos="flip-left" className='btn mt-2 btn-outline-dark' onClick={imageUpload}>Update</button> :
                                 <button data-aos="flip-left" className='btn mt-2 btn-outline-dark' onClick={handleButtonClick}>change picture</button>) : null}
+                            {/* {isEdit ? (selectedFile !== image ?
+                                <button data-aos="flip-left" className='btn mt-2 btn-outline-dark' onClick={imageUpload}>Update</button> :
+                                <button data-aos="flip-left" className='btn mt-2 btn-outline-dark' onClick={handleButtonClick}>change picture</button>) : null} */}
                         </div>
                         {isEdit ?
                             <>

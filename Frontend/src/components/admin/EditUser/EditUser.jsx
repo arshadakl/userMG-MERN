@@ -20,7 +20,6 @@ function EditUser() {
                 setMobile(mobile);
                 setfullName(fullName)
                 setId(_id)
-
             })
         } catch (error) {
             console.log(error);

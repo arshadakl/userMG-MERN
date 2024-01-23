@@ -51,3 +51,23 @@ export const UpdateUser = async (data) => {
         console.log(error);
     }
 }
+
+
+export const createUser = async(data) => {
+    try {
+        const response = await adminAPI.post('/adduser', data)
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export const UsersSearch = async (key) => {
+    try {
+        const response = await adminAPI.get(`/search?key=${key}`)
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
