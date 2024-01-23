@@ -8,6 +8,10 @@ function AdminNav() {
     const { email } = useSelector((state) => state.admin)
 
     const dispatch = useDispatch()
+    const handleLogout = () => {
+        dispatch(logOutAdmin());
+        navigate('/admin/login');
+      };
     return (
         <header className="font-monospace">
             <nav className="navbar bg-dark text-white py-4">
@@ -20,7 +24,7 @@ function AdminNav() {
                         </button>
 
                         <ul className="dropdown-menu ">
-                            <li onClick={() => dispatch(logOutAdmin())} style={{ cursor: 'pointer' }}>
+                            <li onClick={() => dispatch(handleLogout)} style={{ cursor: 'pointer' }}>
                                 <a className="dropdown-item" >
                                     Logout
                                 </a>

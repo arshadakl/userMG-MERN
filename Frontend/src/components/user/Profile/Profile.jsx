@@ -10,7 +10,7 @@ function Profile() {
     const fileInputRef = useRef(null)
     const [isEdit, setIsEdit] = useState(false)
     const [isImgUpdate, setIsImgUpdate] = useState(false)
-    const { id, userName, fullName, email, image, mobile } = useSelector((state) => state.user)
+    const { id, userName, fullName, email, image, mobile ,token} = useSelector((state) => state.user)
     const [selectedFile, setSelectedFile] = useState(image ? image : baseImg);
     const [profileImg, setProfileImg] = useState('')
     const handleButtonClick = () => {
@@ -23,15 +23,16 @@ function Profile() {
 
     const handleUpdate = (e) => {
         e.preventDefault()
-        UpdateUser({ userName: NewUserName, fullName: NewfullName, mobile: Newmobile, id }).then((res) => {
-
+        UpdateUser({ userName: NewUserName, fullName: NewfullName, mobile: Newmobile, id,token }).then((res) => {
+            console.log(res);
             dispatch(setUserDetails({
                 id: res.user._id,
                 userName: res.user.userName,
                 fullName: res.user.fullName,
                 mobile: res.user.mobile,
                 email: res.user.email,
-                image: res.user.image
+                image: res.user.image,
+                token: token
             }))
             setIsEdit(false)
             isImgUpdate ? null : setSelectedFile(image ? image : baseImg)
@@ -47,8 +48,9 @@ function Profile() {
     };
 
     const imageUpload = async() => {
-        const response = await UpdateImage(profileImg,id)
+        const response = await UpdateImage(profileImg,id,token)
         setIsImgUpdate(true)
+        // setSelectedFile(response.user.image)
         console.log(response);
     }
     return (
@@ -88,7 +90,7 @@ function Profile() {
                                             <input value={Newmobile} onChange={(e) => setmobile(e.target.value)} type="number" className="form-control" />
                                         </div>
 
-                                        <button type='submit' className='btn btn-dark mt-3'>Update Details</button>
+                                        <button type='submit' className='btn btn-dark mt-3'>Save Changes</button>
                                     </form>
 
                                 </div>

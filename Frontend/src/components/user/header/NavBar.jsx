@@ -10,8 +10,6 @@ function NavBar() {
 
   const handleLogout = () => {
     dispatch(logoutDetails());
-
-    // Redirect to login page after logout
     navigate('/login');
   };
  

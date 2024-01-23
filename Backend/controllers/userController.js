@@ -107,10 +107,11 @@ const profilePage = async (req, res) => {
 // #######################
 const updateUser = async (req, res) => {
   try {
-    const {id, userName, fullName, mobile} = req.body
+    const {id, userName, fullName, mobile,token} = req.body
     const userData = await UserDB.updateOne({_id:id},{$set:{userName,fullName,mobile}})
     const user = await UserDB.findById(id)
     user.password = undefined
+    user.token = token
     res.json({user})
 
   } catch (error) {
@@ -123,15 +124,18 @@ const updateUser = async (req, res) => {
 // ######################
 const updateUserImage = async (req, res) => {
   try {
-    const {id} = req.body
+    const {id,token} = req.body
+    console.log(id);
     await UserDB.updateOne({_id:id},{$set:{image:req.file.filename}})
     const user = await UserDB.findOne({_id:id})
-    console.log(user);
+    user.token = token
     res.json({user})
   } catch (error) {
     console.log(error.message);
   }
 }
+
+
 
 module.exports = {
   doSignup,

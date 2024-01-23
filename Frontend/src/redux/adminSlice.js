@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     id: "",
-    email: "",
+    email: ""
 };
 
 const loadState = () => {
@@ -22,13 +22,13 @@ const saveState = (state) => {
         const serializedState = JSON.stringify(state);
         localStorage.setItem("adminToken", serializedState); // Fix the key here
     } catch (error) {
-        // Handle error if needed
+        console.log(error.message);
     }
 };
 
 const adminSlice = createSlice({
     name: 'admin',
-    initialState,
+    initialState:loadState(),
     reducers: {
         setAdminDetails: (state, action) => {
             state.id = action.payload.id;

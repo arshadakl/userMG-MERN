@@ -8,10 +8,12 @@ const bodyParser = require("body-parser")
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({extended:true}))
 
-
+const auth = require('../middlewares/adminMiddleware')
 const adminController = require('../controllers/adminController')
 
 router.post('/login',adminController.doLogin)
 router.get('/allUsers',adminController.getAllUsers)
+router.delete('/deleteuser/:id', auth.isLogin, adminController.deleteUser);
+
 
 module.exports = router

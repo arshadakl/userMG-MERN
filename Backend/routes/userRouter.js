@@ -2,8 +2,6 @@ const express = require('express')
 const router = express()
 const bodyParser = require("body-parser")
 
-// router.set('view engine', 'ejs');
-// router.set('views','./views/user/')
 const fileUpload  = require('../middlewares/fileUpload')
 
 
@@ -19,8 +17,8 @@ router.post('/signup',userController.doSignup)
 router.get('/logout',userController.doLogout)
 
 router.get('/profile',authMdil.isLogin,userController.profilePage)
-router.patch('/updateuser',userController.updateUser)
 
+router.patch('/updateuser',authMdil.isLogin,userController.updateUser)
 router.post('/updateimg',fileUpload.upload.single("image"),userController.updateUserImage)
 
 module.exports = router

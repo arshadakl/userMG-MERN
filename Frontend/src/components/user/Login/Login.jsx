@@ -44,7 +44,8 @@ function Login({ authFor }) {
                     fullName: loginResponse.user.fullName,
                     mobile: loginResponse.user.mobile,
                     email: loginResponse.user.email,
-                    image: loginResponse.user.image
+                    image: loginResponse.user.image,
+                    token: loginResponse.token
                 }))
                 navigate('/')
             } else {

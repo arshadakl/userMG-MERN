@@ -37,15 +37,34 @@ const doLogin = async (req, res) => {
 // #################################
 const getAllUsers = async(req,res)=>{
     try {
-        console.log("data");
         let users = await UserDB.find()
-        console.log(users);
         res.status(200).json({success:true,users})
     } catch (error) {
         
     }
 }
+
+
+//delete user
+// #######################
+const deleteUser = async(req,res)=>{
+  try {
+    console.log("test");
+    const userId = req.params.id;
+    console.log(userId);
+    const result = await UserDB.deleteOne({_id:userId})
+    let users = await UserDB.find()
+    console.log(result);
+    res.status(200).json({success:true,users})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
 module.exports = {
   doLogin,
-  getAllUsers
+  getAllUsers,
+  deleteUser
 };

@@ -8,7 +8,10 @@ const initialState = {
   email: "",
   image: "",
   mobile: "",
+  token:""
 };
+
+
 
 const loadState = () => {
   try {
@@ -41,16 +44,18 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.image = action.payload.image;
       state.mobile = action.payload.mobile;
+      state.token = action.payload.token;
 
       saveState(state);
     },
     logoutDetails: (state, action) => {
-      state.id = "";
+      state.id = ""; 
       state.userName = "";
       state.fullName = "";
       state.email = "";
       state.image = "";
       state.mobile = "";
+      state.token = "";
       localStorage.clear()
     //   saveState(initialState);
     },

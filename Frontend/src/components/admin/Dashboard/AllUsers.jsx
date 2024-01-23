@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { GetAllUsers } from '../../../api/adminApi'
+import React, { useEffect, useState, useRef } from 'react'
+import { DeleteUser, GetAllUsers } from '../../../api/adminApi'
+
 
 function AllUsers() {
+    const closeBTN = useRef(null)
+    const [deleteUser,setDeleteUser] = useState('')
     const [users, setUsers] = useState([])
+
     useEffect(() => {
         try {
             const getUser = async () => {
@@ -19,6 +23,17 @@ function AllUsers() {
     useEffect(() => {
         console.log(users);
     }, [users])
+
+
+    const handleDeleteUser = async () =>{
+        console.log(deleteUser._id);
+        const response = await DeleteUser(deleteUser._id)
+        console.log(response);
+        if(response.success){
+            setUsers(response.users)
+            closeBTN.current.click()
+        }
+    }
 
     return (
         <>
@@ -58,28 +73,28 @@ function AllUsers() {
                                     </thead>
                                     <tbody>
                                         {users.map((item) => {
-                                            return(
-                                                <tr>
-                                                <th scope="row" className="text-center">
-                                                    {item.userName}
-                                                </th>
-                                                <td>
-                                                {item.email}
+                                            return (
+                                                <tr >
+                                                    <th scope="row" className="text-center">
+                                                        {item.userName}
+                                                    </th>
+                                                    <td>
+                                                        {item.email}
 
-                                                </td>
-                                                <td>
-                                                {item.mobile}
+                                                    </td>
+                                                    <td>
+                                                        {item.mobile}
 
-                                                </td>
-                                                <td className="text-end">
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#{{_id}}" className="btn btn-dark">
-                                                        Delete User
-                                                    </button>
-                                                    <a type="button" className="btn btn-outline-dark mx-2">
-                                                        Edit
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td className="text-end">
+                                                        <button type="button" onClick={()=>setDeleteUser(item)} className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                            Delete User
+                                                        </button>
+                                                        <a type="button" className="btn btn-outline-dark mx-2">
+                                                            Edit
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             )
                                         })}
                                     </tbody>
@@ -88,6 +103,27 @@ function AllUsers() {
                         </div>
                     </div>
                 </div>
+
+
+                {/* delete confirmation */}
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content ">
+                            <div class="modal-header">
+                                {/* <h1 class="modal-title fs-5" id="exampleModalLabel"></h1> */}
+                                <button type="button"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            ⚠️ Are you sure to delete <b className='bg-dark text-light px-2'> {deleteUser.userName}</b> User?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" ref={closeBTN} class="btn btn-outline-dark" data-bs-dismiss="modal">Not Now</button>
+                                <button type="button" class="btn btn-dark" onClick={handleDeleteUser}>Delete Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </>
